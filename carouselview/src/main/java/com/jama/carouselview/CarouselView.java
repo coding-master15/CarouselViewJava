@@ -18,13 +18,13 @@ import androidx.recyclerview.widget.SnapHelper;
 
 import com.jama.carouselview.enums.IndicatorAnimationType;
 import com.jama.carouselview.enums.OffsetType;
-import com.rd.PageIndicatorView;
-import com.rd.animation.type.AnimationType;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 public class CarouselView extends FrameLayout {
 
   private Context context;
-  private PageIndicatorView pageIndicatorView;
+
+  private DotsIndicator pageIndicatorView;
   private RecyclerView carouselRecyclerView;
   private CarouselLinearLayoutManager layoutManager;
   private CarouselViewListener carouselViewListener;
@@ -86,10 +86,8 @@ public class CarouselView extends FrameLayout {
       if (indicatorUnselectedColorResourceId != 0) {
         this.setIndicatorUnselectedColor(indicatorUnselectedColorResourceId);
       }
-      this.setIndicatorAnimationType(this.getAnimation(attributes.getInteger(R.styleable.CarouselView_indicatorAnimationType, 0)));
-      this.setIndicatorRadius(attributes.getInteger(R.styleable.CarouselView_indicatorRadius, 5));
-      this.setIndicatorPadding(attributes.getInteger(R.styleable.CarouselView_indicatorPadding, 5));
-      this.setSize(attributes.getInteger(R.styleable.CarouselView_size, 0));
+      this.setIndicatorPadding(attributes.getInteger(R.styleable.CarouselView_indicatorPadding, 5),attributes.getInteger(R.styleable.CarouselView_indicatorPadding, 5),attributes.getInteger(R.styleable.CarouselView_indicatorPadding, 5),attributes.getInteger(R.styleable.CarouselView_indicatorPadding, 5));
+      //this.setSize(attributes.getInteger(R.styleable.CarouselView_size, 0));
       this.setSpacing(attributes.getInteger(R.styleable.CarouselView_spacing, 0));
       attributes.recycle();
     }
@@ -138,7 +136,7 @@ public class CarouselView extends FrameLayout {
           carouselScrollListener.onScrollStateChanged(recyclerView, newState, position);
         }
         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-          pageIndicatorView.setSelection(position);
+          //pageIndicatorView.setSelection(position);
           setCurrentItem(position);
         }
       }
@@ -215,75 +213,29 @@ public class CarouselView extends FrameLayout {
     return this.currentItem;
   }
 
-  public void setIndicatorAnimationType(IndicatorAnimationType indicatorAnimationType) {
-    this.indicatorAnimationType = indicatorAnimationType;
-    switch (indicatorAnimationType) {
-      case DROP:
-        this.pageIndicatorView.setAnimationType(AnimationType.DROP);
-        break;
-      case FILL:
-        this.pageIndicatorView.setAnimationType(AnimationType.FILL);
-        break;
-      case NONE:
-        this.pageIndicatorView.setAnimationType(AnimationType.NONE);
-        break;
-      case SWAP:
-        this.pageIndicatorView.setAnimationType(AnimationType.SWAP);
-        break;
-      case WORM:
-        this.pageIndicatorView.setAnimationType(AnimationType.WORM);
-        break;
-      case COLOR:
-        this.pageIndicatorView.setAnimationType(AnimationType.COLOR);
-        break;
-      case SCALE:
-        this.pageIndicatorView.setAnimationType(AnimationType.SCALE);
-        break;
-      case SLIDE:
-        this.pageIndicatorView.setAnimationType(AnimationType.SLIDE);
-        break;
-      case THIN_WORM:
-        this.pageIndicatorView.setAnimationType(AnimationType.THIN_WORM);
-        break;
-      case SCALE_DOWN:
-        this.pageIndicatorView.setAnimationType(AnimationType.SCALE_DOWN);
-    }
-  }
 
   public IndicatorAnimationType getIndicatorAnimationType() {
     return this.indicatorAnimationType;
   }
 
-  public void setIndicatorRadius(int radius) {
-    this.pageIndicatorView.setRadius(radius);
-  }
-
-  public int getIndicatorRadius() {
-    return this.pageIndicatorView.getRadius();
-  }
-
-  public void setIndicatorPadding(int padding) {
-    this.pageIndicatorView.setPadding(padding);
-  }
-
-  public int getIndicatorPadding() {
-    return this.pageIndicatorView.getPadding();
+  public void setIndicatorPadding(int left, int top, int right, int bottom) {
+    this.pageIndicatorView.setPadding(left, top, right, bottom);
   }
 
   public void setIndicatorSelectedColor(int color) {
-    this.pageIndicatorView.setSelectedColor(color);
+    this.pageIndicatorView.setSelectedDotColor(color);
   }
 
   public int getIndicatorSelectedColor() {
-    return this.pageIndicatorView.getSelectedColor();
+    return this.pageIndicatorView.getSelectedDotColor();
   }
 
   public void setIndicatorUnselectedColor(int color) {
-    this.pageIndicatorView.setUnselectedColor(color);
+    this.pageIndicatorView.setDotsColor(color);
   }
 
   public int getIndicatorUnselectedColor() {
-    return this.pageIndicatorView.getUnselectedColor();
+    return this.pageIndicatorView.getDotsColor();
   }
 
   public void setScaleOnScroll(boolean scaleOnScroll) {
@@ -294,10 +246,10 @@ public class CarouselView extends FrameLayout {
     return this.scaleOnScroll;
   }
 
-  public void setSize(int size) {
-    this.size = size;
-    this.pageIndicatorView.setCount(size);
-  }
+//  public void setSize(int size) {
+//    this.size = size;
+//    this.pageIndicatorView.setCount(size);
+//  }
 
   public int getSize() {
     return this.size;
